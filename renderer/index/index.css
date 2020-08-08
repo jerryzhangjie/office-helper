@@ -1,0 +1,50 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding: 0 10px;
+}
+.header section {
+    width: 150px;
+}
+.header section.left {
+    text-align: left;
+}
+.header section.right {
+    text-align: right;
+}
+.header h3 {
+    flex: 1;
+    text-align: center;
+    color: #fff;
+    -webkit-app-region: drag;
+    cursor: move;
+}
+.header section .top_btn {
+    cursor: pointer;
+}
+
+.main {
+    
+}
+.main .task_list {
+    padding: 20px;
+    padding-right: 0;
+}
+.main .task_list .task {
+    display: inline-block;
+    width: 150px;
+    height: 100px;
+    border: 1px solid rgba(0,6,109,.1);
+    border-radius: 5px;
+    background: #fff;
+    padding: 5px;
+    margin-right: 20px;
+    box-shadow: 4px 4px 6px 0 rgba(0,6,109,.2);
+}
+
+
+.footer {
+
+}

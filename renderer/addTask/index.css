@@ -1,0 +1,51 @@
+.header {
+    height: 35px;
+    line-height: 35px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.main {
+    border: 1px solid #ccc;
+    margin: 0 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+.line {
+    display: flex;
+    align-items: center;
+}
+.input {
+    flex: 1;
+    outline: none;
+    border: 1px solid #000;
+    resize: none;   /* 禁止拖拉 */
+    margin: 10px 0;
+}
+.event,
+.address {
+    height: 40px;
+    padding: 5px;
+}
+.data_time {
+    font-size: 0;
+}
+.date,
+.time {
+    border: none;
+    outline: none;
+    height: 25px;
+    width: 50%;
+    text-align: center;
+}
+
+.footer {
+    height: 52px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.btn {
+    cursor: pointer;
+}

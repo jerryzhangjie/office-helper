@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/reset.css">
+    <link rel="stylesheet" href="./index.css">
+    <title>添加事项</title>
+</head>
+<body>
+    <header class="header">添加事项</header>
+    <main class="main">
+        <section class="line">
+            <label for="event">事项：</label>
+            <textarea id="event" class="input event"></textarea>
+        </section>
+        <section class="line">
+            <label for="address">地点：</label>
+            <textarea id="address" class="input address"></textarea>
+        </section>
+        <section class="line">
+            <label>时间：</label>
+            <span class="input data_time">
+                <input type="date" id="date" class="date">
+                <input type="time" id="time" class="time">
+            </span>
+        </section>
+    </main>
+    <footer class="footer">
+        <button id="add" class="btn add">添加</button>
+        <button id="cancel" class="btn cancel">取消</button>
+    </footer>
+    <script src="./index.js"></script>
+</body>
+</html>
