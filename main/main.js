@@ -61,7 +61,7 @@ function createWindow(options, page) {
     })
 
     // 打开控制台
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     // 热更新
     client.create(win)
