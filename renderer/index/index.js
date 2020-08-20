@@ -1,35 +1,15 @@
 const { ipcRenderer: ipc } = require('electron')
-
+const fs = require('fs')
 const { $ } = require('../public/util')
+
+let timer = null
 
 window.onload = function() {
     // 事件绑定
     bindEvent()
-    const taskList = []
-    taskList.push({
-        title: '周会',
-        address: '五楼氖',
-        time: '2020/08/04 9:43'
-    })
-    taskList.push({
-        title: '需求评审',
-        address: '六楼GG',
-        time: '2020/08/04 9:42'
-    })
     
-    let liList = ''
-    taskList.forEach((task) => {
-        liList += `<li class="task">
-            <p>事项：${task.title}</p>
-            <p>地点：${task.address}</p>
-            <span>时间：${task.time}</span>
-        </li>`
-    })
-    $('#task_list').innerHTML = liList
-
-    // 消息提醒
-    var cbkNotify = notify(taskList)
-    setInterval(cbkNotify, 5000)
+    // 待办事项展示
+    showTask()
 }
 
 // 闭包实现可传参
@@ -37,10 +17,11 @@ function notify(taskList) {
     return function() {     // 这是实际想传给setTimeout的函数
         let now = new Date()
         let nowTimestamp = parseInt(now.getTime() / (1000 * 60))        // 具体到“分”的时间戳
+
         taskList.forEach((task) => {
             let title = task.title
             let address = task.address 
-            let time = task.time
+            let time = task.fullTime
             let timestamp = (new Date(time)).getTime() / (1000 * 60)    // 具体到“分”的时间戳
             if (timestamp === nowTimestamp) {
                 new  window.Notification(title, {
@@ -58,10 +39,48 @@ function bindEvent() {
     })
     // 关闭
     $('#close').addEventListener('click', () => {
+        clearInterval(timer)
         ipc.send('close')
     })
     // 添加
     $('#add_task').addEventListener('click', () => {
         ipc.send('add')
+    })
+    // 监听数据变化
+    ipc.on('update-view', () => {
+        showTask()
+    })
+}
+
+function showTask() {
+    let taskList = []
+    fs.readFile('dataBase.txt', function(err, data) {
+        if (err) {
+            return console.error(err)
+        }
+        data = data.toString()
+        if (data) {
+            console.log(data)
+            taskList = JSON.parse(data)
+        }
+
+        // 消息提醒
+        let cbkNotify = notify(taskList)
+        clearInterval(timer)
+        timer = setInterval(cbkNotify, 5000)
+    
+        let liList = ''
+        if (taskList.length) {
+            taskList.forEach((task) => {
+                liList += `<li class="task">
+                    <p>事项：${task.title}</p>
+                    <p>地点：${task.address}</p>
+                    <p>时间：${task.fullTime}</p>
+                </li>`
+            })
+        } else {
+            liList = `<li class="no_data"></li>`
+        }
+        $('#task_list').innerHTML = liList
     })
 }

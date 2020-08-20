@@ -48,4 +48,10 @@
 }
 .btn {
     cursor: pointer;
+    background: #fff;
+    border: 1px solid #007fff;
+    outline: none;
+    color: #007fff;
+    padding: 2px 5px;
+    border-radius: 2px;
 }

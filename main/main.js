@@ -6,50 +6,21 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const ipc = electron.ipcMain
 let appTray = null  // 托盘
+let mainWin = null
+let addWin = null
 
 app.on('ready', () => {
-    const mainWin = createWindow({
-        width: 800,
-        height: 600,
+    mainWin = createWindow({
+        width: 700,
+        height: 510,
         webPreferences: {
             nodeIntegration: true   // 允许渲染进程使用node接口
         },
         show: false,                // 加载完成前不显示窗口
-        backgroundColor: '#2e2c29', // 加载完成前用背景色填充窗口
+        backgroundColor: '#f4f5f5', // 加载完成前用背景色填充窗口
         frame: false,  
     }, 'renderer/index/index.html')
-    
-    // 最小化
-    ipc.on('minimize', () => {
-        mainWin.minimize()
-    })
-    // 关闭
-    ipc.on('close', () => {
-        mainWin.hide()
-        setTray(mainWin)
-    })
-    // 添加
-    ipc.on('add', () => {
-        const addWin = createWindow({
-            width: 400,
-            height: 300,
-            webPreferences: {
-                nodeIntegration: true   // 允许渲染进程使用node接口
-            },
-            show: false,                // 加载完成前不显示窗口
-            // backgroundColor: '#2e2c29', // 加载完成前用背景色填充窗口
-            frame: false,  
-        }, 'renderer/addTask/index.html')
-
-        // 添加
-        ipc.on('addTask', () => {
-            addWin.minimize()
-        })
-        // 取消
-        ipc.on('cancel', () => {
-            addWin.hide()
-        })
-    })
+    bindEvent()
 })
 
 // 创建浏览器窗口
@@ -61,7 +32,7 @@ function createWindow(options, page) {
     })
 
     // 打开控制台
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
     // 热更新
     client.create(win)
@@ -94,5 +65,44 @@ function setTray(mainWin) {
         mainWin.show()
         // 关闭托盘显示
         appTray.destroy()
+    })
+}
+
+function bindEvent() {
+    // 最小化
+    ipc.on('minimize', () => {
+        // mainWin.minimize()
+        mainWin.hide()
+        setTray(mainWin)
+    })
+    // 关闭
+    ipc.on('close', () => {
+        mainWin.close()
+    })
+    // 添加按钮
+    ipc.on('add', () => {
+        addWin = createWindow({
+            width: 400,
+            height: 300,
+            webPreferences: {
+                nodeIntegration: true   // 允许渲染进程使用node接口
+            },
+            show: false,                // 加载完成前不显示窗口
+            // backgroundColor: '#2e2c29', // 加载完成前用背景色填充窗口
+            frame: false,  
+        }, 'renderer/addTask/index.html')
+    })
+    // 添加任务
+    ipc.on('addTask', () => {
+        // addWin.minimize()
+        addWin.close()
+    })
+    // 取消
+    ipc.on('cancel', () => {
+        addWin.hide()
+    })
+    // 主进程做消息中转，实现渲染进程间通信
+    ipc.on('update-data', () => {
+        mainWin.webContents.send('update-view')
     })
 }
