@@ -22,6 +22,16 @@ Electron 基于 Chromium，而 Chromium 的设计理念是多进行的，直白�
   - 可以使用一部分 Electron 提供的 API
 
 
-[1. 配置热更新](https://www.jianshu.com/p/7d8dc34187f1#2electron-%E7%83%AD%E6%9B%B4%E6%96%B0)
-2. 设置拖动后，点击事件失效怎么办？https://blog.csdn.net/GISuuser/article/details/86685510  可拖动元素-webkit-app-region: drag; 而不可拖动元素设为 no-drag
+[1. 配置热更新](https://www.jianshu.com/p/7d8dc34187f1#2electron-%E7%83%AD%E6%9B%B4%E6%96%B0)   
+
+`gulp-watch`、`electron-connect`的restart、reload、client
+
+2. 设置拖动后，点击事件失效怎么办？https://blog.csdn.net/GISuuser/article/details/86685510  可拖动元素-webkit-app-region: drag; 而不可拖动元素设为 no-drag 
+      
 3. 关闭时放入系统托盘 https://www.zhuyuntao.cn/electron%E5%AE%9E%E7%8E%B0%E6%9C%80%E5%B0%8F%E5%8C%96%E5%88%B0%E6%89%98%E7%9B%98
+
+`Menu`、`Tray`
+
+4. node模块fs实现数据本地文件存储
+
+5. ES6原生API Notification 实现消息通知
